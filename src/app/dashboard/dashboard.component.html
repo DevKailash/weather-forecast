@@ -1,0 +1,72 @@
+<section class="body">
+    <mat-grid-list cols="2" rowHeight="4:3" gutterSize="5px">
+        <mat-grid-tile  [colspan]="1" [rowspan]="1">
+            <mat-card class="custom-card">
+                <mat-tab-group mat-align-tabs="start" (selectedTabChange)="stateChange($event)" animationDuration="0ms">
+                    <mat-tab label="Current" ></mat-tab>
+                    <mat-tab label="Hourly" ></mat-tab>
+                    <mat-tab label="16 Days" ></mat-tab>
+                </mat-tab-group>
+                <mat-form-field class="example-form-field custom-search">
+                    <mat-label>Search new place</mat-label>
+                    <input matInput type="search" [(ngModel)]="searchPlace">
+                    <button mat-button *ngIf="searchPlace" matSuffix mat-icon-button aria-label="Clear" (click)="searchPlace=''">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                    <button mat-icon-button *ngIf="searchPlace" matSuffix color="primary" (click)="searchWeather(searchPlace, 'new')" aria-label="search">
+                        <mat-icon>search</mat-icon>
+                    </button>
+                </mat-form-field>
+                <div class="noData" *ngIf="!WeatherData.name">No data available</div>
+                <mat-card *ngIf="WeatherData.name">
+                    <mat-card-header>
+                      <mat-card-title>{{WeatherData.name}}</mat-card-title>
+                      <mat-card-subtitle>{{WeatherData.weatherDes}}</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content class="search-result">
+                        <div *ngIf="WeatherData.isDay">
+                            <span class="material-icons">wb_sunny</span>  
+                        </div>   
+                        <div *ngIf="!WeatherData.isDay">
+                            <span class="material-icons">brightness_2</span>  
+                        </div>
+                        <div class="temp_celcius">{{WeatherData.temp_celcius}}°</div>
+                        <div class="temp_min">{{WeatherData.temp_min}}° / {{WeatherData.temp_max}}°</div>
+                        <div class="temp_min">Feels Like: {{WeatherData.temp_feels_like}}°</div>
+                        <div class="placeName">Humidity: {{WeatherData.main.humidity}}%</div>
+                    </mat-card-content>
+                    <mat-card-actions>
+                      <button mat-button (click)="addCity()">Mark my place <span class="material-icons">flag</span></button>
+                    </mat-card-actions>
+                </mat-card>
+            </mat-card>
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="1" [rowspan]="1">
+            <mat-card class="custom-card custom-card-color" >
+                <div class="cardBody">
+                    <mat-card-title>Saved Forecast</mat-card-title>
+                    <div class="noData" *ngIf="!WeatherSavedData.name">No data available</div>
+                    <mat-card *ngIf="WeatherSavedData.name" style="margin-top: 22px;">
+                        <mat-card-header>
+                          <mat-card-title>{{WeatherSavedData.name}}</mat-card-title>
+                          <mat-card-subtitle>{{WeatherSavedData.weatherDes}}</mat-card-subtitle>
+                        </mat-card-header>
+                        <mat-card-content class="search-result">
+                            <div *ngIf="WeatherSavedData.isDay">
+                                <span class="material-icons">wb_sunny</span>  
+                            </div>   
+                            <div *ngIf="!WeatherSavedData.isDay">
+                                <span class="material-icons">brightness_2</span>  
+                            </div>
+                            <div class="temp_celcius">{{WeatherSavedData.temp_celcius}}°</div>
+                            <div class="temp_min">{{WeatherSavedData.temp_min}}° / {{WeatherSavedData.temp_max}}°</div>
+                            <div class="temp_min">Feels Like: {{WeatherSavedData.temp_feels_like}}°</div>
+                            <div class="placeName">Humidity: {{WeatherSavedData.main.humidity}}%</div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </mat-card>
+        </mat-grid-tile>
+    </mat-grid-list>
+</section>
